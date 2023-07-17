@@ -1,0 +1,72 @@
+#include <iostream>
+ 
+int h(int n, int m) {
+    return n % m;
+};
+ 
+ 
+template <typename Key, typename E>
+class KVpair {
+    private:
+        Key k;
+        E value;
+ 
+    public:
+ 
+        KVpair() {}
+ 
+        KVpair(Key keyval, E eval) {
+            k = keyval;
+            value = eval;
+        }
+ 
+        Key getKey() { return k; }
+        E getValue() { return value; }
+};
+ 
+template <typename Key, typename E>
+class HT {
+    private:
+        KVpair<Key, E>* HTarray;
+        int M;
+ 
+    public:
+        HT(int size = 10) {
+            HTarray = new KVpair<Key, E>[size];
+            M = size;
+        }
+ 
+        // Insert baseado em linear probing
+        void hashInsert(const Key& k, const E& e) { 
+            int home;                       // Posição padrão de e
+            int pos = home = h(k, M);       // Início da sequência do linear probing
+ 
+            for (int i = 1; (HTarray[pos]).getKey() != NULL; i++) {
+                pos = (home + i) % M;
+            }
+ 
+            KVpair<Key, E> temp(k, e);
+            HTarray[pos] = temp;
+        }
+ 
+        void print() const {
+            for (int i = 0; i < M; i++)
+                std::cout << "chave: " << (HTarray[i]).getKey() << " | valor: " << (HTarray[i]).getValue() << std::endl;
+        }
+ 
+ 
+};
+ 
+int main() {
+ 
+    HT<int, int> hashtab;
+ 
+    hashtab.hashInsert(2, 2);
+    hashtab.hashInsert(2, 4);
+    hashtab.hashInsert(2, 6);
+    hashtab.print();
+ 
+    
+ 
+    return 0;
+};

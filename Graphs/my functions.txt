@@ -1,0 +1,32 @@
+ void BFS(int start){
+    int explored,explored_neighbour;
+    Queue graph_queue; //Cria a fila
+    graph_queue.Enqueue(start); // Coloca na fila o vértice que você escolheu para começar
+    //PreVisit
+    
+    setMark(start,VISITED); // Marca ele como visitado
+    while(numVertex > 0){
+        explored = graph_queue.Dequeue(); //Retira o primeiro elemento da fila 
+        for(explored_neighbour = first(explored);explored_neighbour < numVertex;explored_neighbour = next(explored,explored_neighbour)){
+            if(getMark(explored_neighbour) == UNVISITED) setMark(explored_neighbour,VISITED); //Se o vertice não for visitado ele irá adicionar todos a fila
+            graph_queue.Enqueue(explored_neighbour);
+     } 
+    //PostVisit 
+    cout << explored << endl;     
+    }
+}
+void DFS(int start){
+        cout << start + 1 << " ";
+        setMark(start,VISITED);
+        for(int w = first(start);w < numVertex;w = next(start,w)){
+           if(getMark(w) == UNVISITED) DFS(w);
+        //cout << start << endl;
+        }
+}
+void Graph_Traverse(){
+    int v;
+    for(v = 0; v < numOfVertex();v++) setMark(v,UNVISITED);
+    for(v = 0; v < numOfVertex();v++){
+        if(getMark(v) == UNVISITED) DFS(v);
+    }
+}
